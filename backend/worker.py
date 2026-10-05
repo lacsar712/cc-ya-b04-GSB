@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import psycopg
 from psycopg.rows import dict_row
 
-from db import SCHEMA, connect
+from db import COMPARE_SCHEMA, SCHEMA, connect
 from rules import judge
 
 POLL_SEC = float(os.environ.get("WORKER_POLL_SEC", "0.5"))
@@ -16,6 +16,7 @@ IDLE_SEC = float(os.environ.get("WORKER_IDLE_SEC", "1.0"))
 
 def ensure_schema(conn):
     conn.execute(SCHEMA)
+    conn.execute(COMPARE_SCHEMA)
     conn.commit()
 
 
